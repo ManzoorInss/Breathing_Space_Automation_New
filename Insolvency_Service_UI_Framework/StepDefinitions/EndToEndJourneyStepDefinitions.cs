@@ -5,6 +5,7 @@ using Bankruptcy_Automation_Framework.Utilities;
 using OpenQA.Selenium;
 using System;
 using System.Drawing;
+using System.Reflection.PortableExecutable;
 using System.Security;
 using TechTalk.SpecFlow;
 
@@ -24,6 +25,7 @@ namespace Bankruptcy_Automation_Framework.StepDefinitions
         SignIntoExistingApplicationPage signIntoExistingApplicationPage;
         ContinueToApplicationPage continueToApplicationPage;
         ApplicationOverviewPage applicationOverviewPage;
+        AddPersonPage addPersonPage;
         PersonalDetailsPage personalDetailsPage;
         PersonalDetails2Page personalDetails2Page;
         OtherNameOrAliasPage otherNameOrAliasPage;
@@ -32,6 +34,7 @@ namespace Bankruptcy_Automation_Framework.StepDefinitions
         YourHouseholdPage yourHouseholdPage;
         AddressHistoryPage addressHistoryPage;
         DependantsDontLiveWithMePage dependantsDontLiveWithMePage;
+        DependantDetailsPage dependantDetailsPage;
         PersonalDetailsSummaryPage personalDetailsSummaryPage;
         EmploymentSummaryPage employmentSummaryPage;
         YourStatusPage yourStatusPage;
@@ -72,6 +75,7 @@ namespace Bankruptcy_Automation_Framework.StepDefinitions
             this.signIntoExistingApplicationPage = signIntoExistingApplicationPage;
             this.continueToApplicationPage = continueToApplicationPage;
             this.applicationOverviewPage = applicationOverviewPage;
+            this.addPersonPage = addPersonPage;
             this.personalDetailsPage = personalDetailsPage;
             this.personalDetails2Page = personalDetails2Page;
             this.otherNameOrAliasPage = otherNameOrAliasPage;
@@ -80,6 +84,7 @@ namespace Bankruptcy_Automation_Framework.StepDefinitions
             this.yourHouseholdPage = yourHouseholdPage;
             this.addressHistoryPage = addressHistoryPage;
             this.dependantsDontLiveWithMePage = dependantsDontLiveWithMePage;
+            this.dependantDetailsPage = dependantDetailsPage; 
             this.personalDetailsSummaryPage = personalDetailsSummaryPage;
             this.employmentSummaryPage = employmentSummaryPage;
             this.yourStatusPage = yourStatusPage;
@@ -200,6 +205,222 @@ namespace Bankruptcy_Automation_Framework.StepDefinitions
 
         #endregion
 
+        #endregion
+
+        #region Section 1.1 Personal Details with Alias Name
+
+        #region Quick route
+
+        [When(@"I confirm my personal details including alias")]
+        public void WhenIConfirmMyPersonalDetailsIncludingAlias()
+        {
+            applicationOverviewPage.PersonalDetails_StartButton.Click();
+            personalDetailsPage.Title_MrOption.Click();
+            personalDetailsPage.Continue.Click();
+            personalDetails2Page.Gender_ManOption.Click();
+            personalDetails2Page.NINumber_InputField.SendKeys("AA123456A");
+            personalDetails2Page.RelationShipStatus_SingleOption.Click();
+            personalDetails2Page.ContinueButton.Click();
+            otherNameOrAliasPage.FirstName_InputField.SendKeys("Previous");
+            otherNameOrAliasPage.LastName_InputField.SendKeys("Name");
+            otherNameOrAliasPage.AddNameButton.Click();
+            otherNameOrAliasPage.Continue_AllNamesAdded.Click();
+            contactDetailsPage.TelephoneField.SendKeys("01213337777");
+            contactDetailsPage.BuildingAndStreet_LineOneField.SendKeys("1 Test Street");
+            contactDetailsPage.TownOrCityField.SendKeys("Test Town");
+            contactDetailsPage.PostcodeField.SendKeys("T35 7ER");
+            contactDetailsPage.CountryField.SendKeys("United Kingdom");
+            contactDetailsPage.Continue.Click();
+            residencyDetailsPage.March.Click();
+            residencyDetailsPage.Year.SendKeys("2000");
+            residencyDetailsPage.OwntheProperty_YesOption.Click();
+            residencyDetailsPage.ContinueButton.Click();
+            yourHouseholdPage.Continue_Button.Click();
+            addressHistoryPage.Continue_Button.Click();
+            dependantsDontLiveWithMePage.Continue_Button.Click();
+            personalDetailsSummaryPage.Continue_Button.Click();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Section 1.2 Personal details including anyone who lives with you
+
+        #region quick route
+
+        [When(@"I confirm my personal details including anyone who lives with you")]
+        public void WhenIConfirmMyPersonalDetailsIncludingAnyoneWhoLivesWithYouAndFinanciallyDependant()
+        {
+            applicationOverviewPage.PersonalDetails_StartButton.Click();
+            personalDetailsPage.Title_MrOption.Click();
+            personalDetailsPage.Continue.Click();
+            personalDetails2Page.Gender_ManOption.Click();
+            personalDetails2Page.NINumber_InputField.SendKeys("AA123456A");
+            personalDetails2Page.RelationShipStatus_SingleOption.Click();
+            personalDetails2Page.ContinueButton.Click();
+            otherNameOrAliasPage.Continue_AllNamesAdded.Click();
+            contactDetailsPage.TelephoneField.SendKeys("01213337777");
+            contactDetailsPage.BuildingAndStreet_LineOneField.SendKeys("1 Test Street");
+            contactDetailsPage.TownOrCityField.SendKeys("Test Town");
+            contactDetailsPage.PostcodeField.SendKeys("T35 7ER");
+            contactDetailsPage.CountryField.SendKeys("United Kingdom");
+            contactDetailsPage.Continue.Click();
+            residencyDetailsPage.March.Click();
+            residencyDetailsPage.Year.SendKeys("2000");
+            residencyDetailsPage.OwntheProperty_YesOption.Click();
+            residencyDetailsPage.ContinueButton.Click();
+            yourHouseholdPage.FirstName_InputField.SendKeys("First");
+            yourHouseholdPage.LastName_InputField.SendKeys("Name");
+            yourHouseholdPage.AddPersonButton.Click();
+            addPersonPage.AgeGroup_24_30.Click();
+            addPersonPage.Relationship_HusbandWifePartnerOption.Click();
+            addPersonPage.FinanciallyDependant_YesOption.Click();
+            yourHouseholdPage.Continue_Button.Click();
+            addressHistoryPage.Continue_Button.Click();
+            dependantsDontLiveWithMePage.Continue_Button.Click();
+            personalDetailsSummaryPage.Continue_Button.Click();
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Section 1.3 Personal details Including Dependants Who dont live with you
+        #region Quick route
+
+        [When(@"I confirm my personal details including dependants who dont live with you")]
+        public void WhenIConfirmMyPersonalDetailsIncludingDependantsWhoDontLiveWithYou()
+        {
+            applicationOverviewPage.PersonalDetails_StartButton.Click();
+            personalDetailsPage.Title_MrOption.Click();
+            personalDetailsPage.Continue.Click();
+            personalDetails2Page.Gender_ManOption.Click();
+            personalDetails2Page.NINumber_InputField.SendKeys("AA123456A");
+            personalDetails2Page.RelationShipStatus_SingleOption.Click();
+            personalDetails2Page.ContinueButton.Click();
+            otherNameOrAliasPage.Continue_NoOtherNames.Click();
+            contactDetailsPage.TelephoneField.SendKeys("01213337777");
+            contactDetailsPage.BuildingAndStreet_LineOneField.SendKeys("1 Test Street");
+            contactDetailsPage.TownOrCityField.SendKeys("Test Town");
+            contactDetailsPage.PostcodeField.SendKeys("T35 7ER");
+            contactDetailsPage.CountryField.SendKeys("United Kingdom");
+            contactDetailsPage.Continue.Click();
+            residencyDetailsPage.March.Click();
+            residencyDetailsPage.Year.SendKeys("2000");
+            residencyDetailsPage.OwntheProperty_YesOption.Click();
+            residencyDetailsPage.ContinueButton.Click();
+            yourHouseholdPage.Continue_Button.Click();
+            addressHistoryPage.Continue_Button.Click();
+            dependantsDontLiveWithMePage.FirstName_InputField.SendKeys("Dependant");
+            dependantsDontLiveWithMePage.LastName_InputField.SendKeys("One");
+            dependantsDontLiveWithMePage.AddPersonButton.Click();
+            dependantDetailsPage.AgeInputField.SendKeys("15");
+            dependantDetailsPage.BuildingAndStreet_LineOneField.SendKeys("2 Test Street");
+            dependantDetailsPage.TownOrCityField.SendKeys("Test Town");
+            dependantDetailsPage.PostcodeField.SendKeys("T35 7ER");
+            dependantDetailsPage.CountryField.SendKeys("United Kingdom");
+            dependantDetailsPage.Relationship_ChildOption.Click();
+            dependantDetailsPage.ContinueButton.Click();
+            personalDetailsSummaryPage.Continue_Button.Click();
+        }
+
+        #endregion
+        #endregion
+
+        #region Section 1.4 Personal Details with AliasName Including anyone who lives with you
+        #region Quick route
+
+        [When(@"I confirm my personal details with AliasName Including anyone who lives with you")]
+        public void WhenIConfirmMyPersonalDetailsWithAliasNameIncludingAnyoneWhoLivesWithYou()
+        {
+            applicationOverviewPage.PersonalDetails_StartButton.Click();
+            personalDetailsPage.Title_MrOption.Click();
+            personalDetailsPage.Continue.Click();
+            personalDetails2Page.Gender_ManOption.Click();
+            personalDetails2Page.NINumber_InputField.SendKeys("AA123456A");
+            personalDetails2Page.RelationShipStatus_SingleOption.Click();
+            personalDetails2Page.ContinueButton.Click();
+            otherNameOrAliasPage.FirstName_InputField.SendKeys("Previous");
+            otherNameOrAliasPage.LastName_InputField.SendKeys("Name");
+            otherNameOrAliasPage.AddNameButton.Click();
+            otherNameOrAliasPage.Continue_AllNamesAdded.Click();
+            contactDetailsPage.TelephoneField.SendKeys("01213337777");
+            contactDetailsPage.BuildingAndStreet_LineOneField.SendKeys("1 Test Street");
+            contactDetailsPage.TownOrCityField.SendKeys("Test Town");
+            contactDetailsPage.PostcodeField.SendKeys("T35 7ER");
+            contactDetailsPage.CountryField.SendKeys("United Kingdom");
+            contactDetailsPage.Continue.Click();
+            residencyDetailsPage.March.Click();
+            residencyDetailsPage.Year.SendKeys("2000");
+            residencyDetailsPage.OwntheProperty_YesOption.Click();
+            residencyDetailsPage.ContinueButton.Click();
+            yourHouseholdPage.FirstName_InputField.SendKeys("First");
+            yourHouseholdPage.LastName_InputField.SendKeys("Name");
+            yourHouseholdPage.AddPersonButton.Click();
+            addPersonPage.AgeGroup_24_30.Click();
+            addPersonPage.Relationship_HusbandWifePartnerOption.Click();
+            addPersonPage.FinanciallyDependant_YesOption.Click();
+            yourHouseholdPage.Continue_Button.Click();
+            addressHistoryPage.Continue_Button.Click();
+            dependantDetailsPage.ContinueButton.Click();
+            personalDetailsSummaryPage.Continue_Button.Click();
+        }
+
+        #endregion
+        #endregion
+
+        #region Section 1.5 Personal details with With AliasName, Anyone Who Lives With You, Dependants Who Dont Live With you
+
+        #region Quick route
+        [When(@"I confirm my personal details with AliasName, Anyone Who Lives With You, Dependants Who Dont Live With you")]
+        public void WhenIConfirmMyPersonalDetailsWithAliasNameAnyoneWhoLivesWithYouDependantsWhoDontLiveWithYou()
+        {
+            applicationOverviewPage.PersonalDetails_StartButton.Click();
+            personalDetailsPage.Title_MrOption.Click();
+            personalDetailsPage.Continue.Click();
+            personalDetails2Page.Gender_ManOption.Click();
+            personalDetails2Page.NINumber_InputField.SendKeys("AA123456A");
+            personalDetails2Page.RelationShipStatus_SingleOption.Click();
+            personalDetails2Page.ContinueButton.Click();
+            otherNameOrAliasPage.FirstName_InputField.SendKeys("Previous");
+            otherNameOrAliasPage.LastName_InputField.SendKeys("Name");
+            otherNameOrAliasPage.AddNameButton.Click();
+            otherNameOrAliasPage.Continue_AllNamesAdded.Click();
+            contactDetailsPage.TelephoneField.SendKeys("01213337777");
+            contactDetailsPage.BuildingAndStreet_LineOneField.SendKeys("1 Test Street");
+            contactDetailsPage.TownOrCityField.SendKeys("Test Town");
+            contactDetailsPage.PostcodeField.SendKeys("T35 7ER");
+            contactDetailsPage.CountryField.SendKeys("United Kingdom");
+            contactDetailsPage.Continue.Click();
+            residencyDetailsPage.March.Click();
+            residencyDetailsPage.Year.SendKeys("2000");
+            residencyDetailsPage.OwntheProperty_YesOption.Click();
+            residencyDetailsPage.ContinueButton.Click();
+            yourHouseholdPage.FirstName_InputField.SendKeys("First");
+            yourHouseholdPage.LastName_InputField.SendKeys("Name");
+            yourHouseholdPage.AddPersonButton.Click();
+            addPersonPage.AgeGroup_24_30.Click();
+            addPersonPage.Relationship_HusbandWifePartnerOption.Click();
+            addPersonPage.FinanciallyDependant_YesOption.Click();
+            yourHouseholdPage.Continue_Button.Click();
+            addressHistoryPage.Continue_Button.Click();
+            dependantsDontLiveWithMePage.FirstName_InputField.SendKeys("Dependant");
+            dependantsDontLiveWithMePage.LastName_InputField.SendKeys("One");
+            dependantsDontLiveWithMePage.AddPersonButton.Click();
+            dependantDetailsPage.AgeInputField.SendKeys("15");
+            dependantDetailsPage.BuildingAndStreet_LineOneField.SendKeys("2 Test Street");
+            dependantDetailsPage.TownOrCityField.SendKeys("Test Town");
+            dependantDetailsPage.PostcodeField.SendKeys("T35 7ER");
+            dependantDetailsPage.CountryField.SendKeys("United Kingdom");
+            dependantDetailsPage.Relationship_ChildOption.Click();
+            dependantDetailsPage.ContinueButton.Click();
+            personalDetailsSummaryPage.Continue_Button.Click();
+        }
+
+
+
+        #endregion
         #endregion
 
         #region Section 2 Employment
