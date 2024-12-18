@@ -1,0 +1,15 @@
+﻿{
+  "TestUser": "Money Advisor",
+  "Organisation": "Manzoor Money Advisor",
+  "FieldValidation": "CheckFieldValidation",
+  "DeletePreviousName": "deletePreviousName",
+  "FindAddressPostcode": "EnterPostcode",
+  "ChangeCurrentAddress": "ChangeCurrentAddress",
+  "NotificationPreference": "email",
+  "CreditorType": "CMP",
+  "CreditorName": "Manzoor Test Creditors",
+  "DebtAmount": "999",
+  "DebtType": "Debt",
+  "BreathingSpaceType": "Mental Health",
+  "NominatedContactRole": "mental health nurse"
+}

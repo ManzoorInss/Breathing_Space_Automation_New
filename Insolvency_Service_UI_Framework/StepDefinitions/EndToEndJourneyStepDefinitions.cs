@@ -1,653 +1,304 @@
-using AventStack.ExtentReports.Gherkin.Model;
-using AventStack.ExtentReports.Reporter;
-using Bankruptcy_Automation_Framework.Pages;
-using Bankruptcy_Automation_Framework.Utilities;
-using OpenQA.Selenium;
-using System;
-using System.Drawing;
-using System.Reflection.PortableExecutable;
-using System.Security;
-using TechTalk.SpecFlow;
-
-namespace Bankruptcy_Automation_Framework.StepDefinitions
-{
-    [Binding]
-    public class EndToEndJourneyStepDefinitions
-    {
-        private IWebDriver driver;
-        public string applicationNumber = string.Empty;
-        HomePage homePage;
-        CompletingYourApplicationPage completingYourApplicationPage;
-        CreateYourAccountPage createYourAccountPage;
-        SecurityQuestionsPage securityQuestionsPage;
-        CheckYourEmailPage checkYourEmailPage;
-        MailTrapPage mailTrapPage;
-        SignIntoExistingApplicationPage signIntoExistingApplicationPage;
-        ContinueToApplicationPage continueToApplicationPage;
-        ApplicationOverviewPage applicationOverviewPage;
-        AddPersonPage addPersonPage;
-        PersonalDetailsPage personalDetailsPage;
-        PersonalDetails2Page personalDetails2Page;
-        OtherNameOrAliasPage otherNameOrAliasPage;
-        ContactDetailsPage contactDetailsPage;
-        ResidencyDetailsPage residencyDetailsPage;
-        YourHouseholdPage yourHouseholdPage;
-        AddressHistoryPage addressHistoryPage;
-        DependantsDontLiveWithMePage dependantsDontLiveWithMePage;
-        DependantDetailsPage dependantDetailsPage;
-        PersonalDetailsSummaryPage personalDetailsSummaryPage;
-        EmploymentSummaryPage employmentSummaryPage;
-        YourStatusPage yourStatusPage;
-        BankAccountsAndSavingsPage bankAccountsAndSavingsPage;
-        AssetsPage assetsPage;
-        OtherItemsPage otherItemsPage;
-        SoldTransferredGiftedAssetsPage soldTransferredGiftedAssetsPage;
-        MoneyYouOwePage moneyYouOwePage;
-        CreditorsAddressPage creditorsAddressPage;
-        AmountYouOwePage amountYouOwePage;
-        ReasonForDebtPage reasonForDebtPage;
-        ActionsTakenPage actionsTakenPage;
-        MoneyYouOweSummaryPage moneyYouOweSummaryPage;
-        IncomeAndExpensesPage incomeAndExpensesPage;
-        LegalProceedingsPage legalProceedingsPage;
-        DebtHistoryOverviewPage debtHistoryOverviewPage;
-        DebtHistoryPage debtHistoryPage;
-        MakeFeePaymentPage makeFeePaymentPage;
-        WorldPayPage worldPayPage;
-        PaymentAcknowledgementPage paymentAcknowledgementPage;
-        ContinueToSubmitPage continueToSubmitPage;
-        SubmitApplicationPage submitApplicationPage;
-        ApplicationSubmittedPage applicationSubmittedPage;
-        AdminLandingPage adminLandingPage;
-        AdminLoginPage adminLoginPage;
-        AdjudicatorLoginPage adjudicatorLoginPage;
-
-        public EndToEndJourneyStepDefinitions(IWebDriver driver, HomePage homePage, CompletingYourApplicationPage completingYourApplicationPage, CreateYourAccountPage createYourAccountPage, SecurityQuestionsPage securityQuestionsPage, CheckYourEmailPage checkYourEmailPage, MailTrapPage mailTrapPage, SignIntoExistingApplicationPage signIntoExistingApplicationPage, ContinueToApplicationPage continueToApplicationPage, ApplicationOverviewPage applicationOverviewPage, PersonalDetailsPage personalDetailsPage, PersonalDetails2Page personalDetails2Page, OtherNameOrAliasPage otherNameOrAliasPage, ContactDetailsPage contactDetailsPage, ResidencyDetailsPage residencyDetailsPage, YourHouseholdPage yourHouseholdPage, AddressHistoryPage addressHistoryPage, DependantsDontLiveWithMePage dependantsDontLiveWithMePage, PersonalDetailsSummaryPage personalDetailsSummaryPage, EmploymentSummaryPage employmentSummaryPage, YourStatusPage yourStatusPage, BankAccountsAndSavingsPage bankAccountsAndSavingsPage, AssetsPage assetsPage, OtherItemsPage otherItemsPage, SoldTransferredGiftedAssetsPage soldTransferredGiftedAssetsPage, MoneyYouOwePage moneyYouOwePage, CreditorsAddressPage creditorsAddressPage, AmountYouOwePage amountYouOwePage, ReasonForDebtPage reasonForDebtPage, ActionsTakenPage actionsTakenPage, MoneyYouOweSummaryPage moneyYouOweSummaryPage, IncomeAndExpensesPage incomeAndExpensesPage, LegalProceedingsPage legalProceedingsPage, DebtHistoryOverviewPage debtHistoryOverviewPage, DebtHistoryPage debtHistoryPage, MakeFeePaymentPage makeFeePaymentPage, WorldPayPage worldPayPage, PaymentAcknowledgementPage paymentAcknowledgementPage, ContinueToSubmitPage continueToSubmitPage, SubmitApplicationPage submitApplicationPage, ApplicationSubmittedPage applicationSubmittedPage, AdminLandingPage adminLandingPage, AdminLoginPage adminLoginPage, AdjudicatorLoginPage adjudicatorLoginPage)
-
-        {
-            this.driver = driver;
-            this.homePage = homePage;
-            this.completingYourApplicationPage = completingYourApplicationPage;
-            this.createYourAccountPage = createYourAccountPage;
-            this.securityQuestionsPage = securityQuestionsPage;
-            this.checkYourEmailPage = checkYourEmailPage;
-            this.mailTrapPage = mailTrapPage;
-            this.signIntoExistingApplicationPage = signIntoExistingApplicationPage;
-            this.continueToApplicationPage = continueToApplicationPage;
-            this.applicationOverviewPage = applicationOverviewPage;
-            this.addPersonPage = addPersonPage;
-            this.personalDetailsPage = personalDetailsPage;
-            this.personalDetails2Page = personalDetails2Page;
-            this.otherNameOrAliasPage = otherNameOrAliasPage;
-            this.contactDetailsPage = contactDetailsPage;
-            this.residencyDetailsPage = residencyDetailsPage;
-            this.yourHouseholdPage = yourHouseholdPage;
-            this.addressHistoryPage = addressHistoryPage;
-            this.dependantsDontLiveWithMePage = dependantsDontLiveWithMePage;
-            this.dependantDetailsPage = dependantDetailsPage; 
-            this.personalDetailsSummaryPage = personalDetailsSummaryPage;
-            this.employmentSummaryPage = employmentSummaryPage;
-            this.yourStatusPage = yourStatusPage;
-            this.bankAccountsAndSavingsPage = bankAccountsAndSavingsPage;
-            this.assetsPage = assetsPage;
-            this.otherItemsPage = otherItemsPage;
-            this.soldTransferredGiftedAssetsPage = soldTransferredGiftedAssetsPage;
-            this.moneyYouOwePage = moneyYouOwePage;
-            this.creditorsAddressPage = creditorsAddressPage;
-            this.amountYouOwePage = amountYouOwePage;
-            this.reasonForDebtPage = reasonForDebtPage;
-            this.actionsTakenPage = actionsTakenPage;
-            this.moneyYouOweSummaryPage = moneyYouOweSummaryPage;
-            this.incomeAndExpensesPage = incomeAndExpensesPage;
-            this.legalProceedingsPage = legalProceedingsPage;
-            this.debtHistoryOverviewPage = debtHistoryOverviewPage;
-            this.debtHistoryPage = debtHistoryPage;
-            this.makeFeePaymentPage = makeFeePaymentPage;
-            this.worldPayPage = worldPayPage;
-            this.paymentAcknowledgementPage = paymentAcknowledgementPage;
-            this.continueToSubmitPage = continueToSubmitPage;
-            this.submitApplicationPage = submitApplicationPage;
-            this.applicationSubmittedPage = applicationSubmittedPage;
-            this.adminLandingPage = adminLandingPage;
-            this.adminLoginPage = adminLoginPage;
-            this.adjudicatorLoginPage = adjudicatorLoginPage;
-        }
-
-        [Given(@"I open the ODS BKT Homepage")]
-        public void GivenIOpenTheODSBKTHomepage()
-        {
-            driver.Navigate().GoToUrl(ConfigUtil.PortalBaseUrl);
-        }
-
-        #region Account Creation
-        #region Quick Route
-
-        [When(@"I create a new account using the email '([^']*)'")]
-        public void WhenICreateANewAccountUsingTheEmail(string p0)
-        {
-            homePage.CreateMyAccountButton.Click();
-            completingYourApplicationPage.ContinueButton.Click();
-            createYourAccountPage.FirstNameInputField.SendKeys("Happy");
-            createYourAccountPage.LastNameInputField.SendKeys("Path");
-            createYourAccountPage.DateofBirth_DayField.SendKeys("01");
-            createYourAccountPage.DateofBirth_MonthField.SendKeys("01");
-            createYourAccountPage.DateofBirth_YearField.SendKeys(DateTime.Now.AddYears(-40).Year.ToString());
-            createYourAccountPage.EmailField.SendKeys(p0);
-            createYourAccountPage.ConfirmEmailField.SendKeys(p0);
-            createYourAccountPage.ContinueButton.Click();
-            securityQuestionsPage.GrandmotherQuestion.Click();
-            securityQuestionsPage.SecurityAnswer1InputField.SendKeys("Auto");
-            securityQuestionsPage.FavouriteFilmQuestion.Click();
-            securityQuestionsPage.SecurityAnswer2InputField.SendKeys("Auto");
-            securityQuestionsPage.FavouriteNovelQuestion.Click();
-            securityQuestionsPage.SecurityAnswer3InputField.SendKeys("Auto");
-            securityQuestionsPage.ContinueButton.Click();
-            checkYourEmailPage.ContinueButton.Click();
-            string BKTWindow = driver.CurrentWindowHandle;
-            driver.SwitchTo().NewWindow(WindowType.Tab);
-            driver.Navigate().GoToUrl(ConfigUtil.MailTrapUrl);
-            Thread.Sleep(2000);
-            mailTrapPage.mailTrapUserEmail.SendKeys(ConfigUtil.MailTrapUsername);
-            mailTrapPage.mailTrapNextButton.Click();
-            Thread.Sleep(1000);
-            mailTrapPage.mailTrapUserPassword.SendKeys(ConfigUtil.MailTrapPassword);
-            mailTrapPage.mailTrapLogInButton.Click();
-            Thread.Sleep(1000);
-            mailTrapPage.mailTrapCookiesAgreement.Click();
-            Thread.Sleep(1000);
-            mailTrapPage.MailTrapEmailSearchBox.SendKeys(p0);
-            Thread.Sleep(1000);
-            mailTrapPage.mailTrapEmail.Click();
-            Thread.Sleep(2000);
-            driver.SwitchTo().Frame(mailTrapPage.EmailIFrame);
-            applicationNumber = mailTrapPage.ApplicationNumber.Text;
-            driver.SwitchTo().Window(BKTWindow);
-            signIntoExistingApplicationPage.ApplicationNumberInputField.SendKeys(applicationNumber);
-            signIntoExistingApplicationPage.ContinueButton.Click();
-            continueToApplicationPage.YourSecurityQuestionInputField.SendKeys("Auto");
-            continueToApplicationPage.ContinueButton.Click();
-        }
-
-        #endregion
-        #endregion
-
-        #region Section 1 Personal Details
-
-        #region Section 1 Quick Route
-
-        [When(@"I confirm my personal details")]
-        public void WhenIConfirmMyPersonalDetails()
-        {
-            applicationOverviewPage.PersonalDetails_StartButton.Click();
-            personalDetailsPage.Title_MrOption.Click();
-            personalDetailsPage.Continue.Click();
-            personalDetails2Page.Gender_ManOption.Click();
-            personalDetails2Page.NINumber_InputField.SendKeys("AA123456A");
-            personalDetails2Page.RelationShipStatus_SingleOption.Click();
-            personalDetails2Page.ContinueButton.Click();
-            otherNameOrAliasPage.Continue_NoOtherNames.Click();
-            contactDetailsPage.TelephoneField.SendKeys("01213337777");
-            contactDetailsPage.BuildingAndStreet_LineOneField.SendKeys("1 Test Street");
-            contactDetailsPage.TownOrCityField.SendKeys("Test Town");
-            contactDetailsPage.PostcodeField.SendKeys("T35 7ER");
-            contactDetailsPage.CountryField.SendKeys("United Kingdom");
-            contactDetailsPage.Continue.Click();
-            residencyDetailsPage.March.Click();
-            residencyDetailsPage.Year.SendKeys("2000");
-            residencyDetailsPage.OwntheProperty_YesOption.Click();
-            residencyDetailsPage.ContinueButton.Click();
-            yourHouseholdPage.Continue_Button.Click();
-            addressHistoryPage.Continue_Button.Click();
-            dependantsDontLiveWithMePage.Continue_Button.Click();
-            personalDetailsSummaryPage.Continue_Button.Click();
-        }
-
-
-        #endregion
-
-        #endregion
-
-        #region Section 1.1 Personal Details with Alias Name
-
-        #region Quick route
-
-        [When(@"I confirm my personal details including alias")]
-        public void WhenIConfirmMyPersonalDetailsIncludingAlias()
-        {
-            applicationOverviewPage.PersonalDetails_StartButton.Click();
-            personalDetailsPage.Title_MrOption.Click();
-            personalDetailsPage.Continue.Click();
-            personalDetails2Page.Gender_ManOption.Click();
-            personalDetails2Page.NINumber_InputField.SendKeys("AA123456A");
-            personalDetails2Page.RelationShipStatus_SingleOption.Click();
-            personalDetails2Page.ContinueButton.Click();
-            otherNameOrAliasPage.FirstName_InputField.SendKeys("Previous");
-            otherNameOrAliasPage.LastName_InputField.SendKeys("Name");
-            otherNameOrAliasPage.AddNameButton.Click();
-            otherNameOrAliasPage.Continue_AllNamesAdded.Click();
-            contactDetailsPage.TelephoneField.SendKeys("01213337777");
-            contactDetailsPage.BuildingAndStreet_LineOneField.SendKeys("1 Test Street");
-            contactDetailsPage.TownOrCityField.SendKeys("Test Town");
-            contactDetailsPage.PostcodeField.SendKeys("T35 7ER");
-            contactDetailsPage.CountryField.SendKeys("United Kingdom");
-            contactDetailsPage.Continue.Click();
-            residencyDetailsPage.March.Click();
-            residencyDetailsPage.Year.SendKeys("2000");
-            residencyDetailsPage.OwntheProperty_YesOption.Click();
-            residencyDetailsPage.ContinueButton.Click();
-            yourHouseholdPage.Continue_Button.Click();
-            addressHistoryPage.Continue_Button.Click();
-            dependantsDontLiveWithMePage.Continue_Button.Click();
-            personalDetailsSummaryPage.Continue_Button.Click();
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Section 1.2 Personal details including anyone who lives with you
-
-        #region quick route
-
-        [When(@"I confirm my personal details including anyone who lives with you")]
-        public void WhenIConfirmMyPersonalDetailsIncludingAnyoneWhoLivesWithYouAndFinanciallyDependant()
-        {
-            applicationOverviewPage.PersonalDetails_StartButton.Click();
-            personalDetailsPage.Title_MrOption.Click();
-            personalDetailsPage.Continue.Click();
-            personalDetails2Page.Gender_ManOption.Click();
-            personalDetails2Page.NINumber_InputField.SendKeys("AA123456A");
-            personalDetails2Page.RelationShipStatus_SingleOption.Click();
-            personalDetails2Page.ContinueButton.Click();
-            otherNameOrAliasPage.Continue_AllNamesAdded.Click();
-            contactDetailsPage.TelephoneField.SendKeys("01213337777");
-            contactDetailsPage.BuildingAndStreet_LineOneField.SendKeys("1 Test Street");
-            contactDetailsPage.TownOrCityField.SendKeys("Test Town");
-            contactDetailsPage.PostcodeField.SendKeys("T35 7ER");
-            contactDetailsPage.CountryField.SendKeys("United Kingdom");
-            contactDetailsPage.Continue.Click();
-            residencyDetailsPage.March.Click();
-            residencyDetailsPage.Year.SendKeys("2000");
-            residencyDetailsPage.OwntheProperty_YesOption.Click();
-            residencyDetailsPage.ContinueButton.Click();
-            yourHouseholdPage.FirstName_InputField.SendKeys("First");
-            yourHouseholdPage.LastName_InputField.SendKeys("Name");
-            yourHouseholdPage.AddPersonButton.Click();
-            addPersonPage.AgeGroup_24_30.Click();
-            addPersonPage.Relationship_HusbandWifePartnerOption.Click();
-            addPersonPage.FinanciallyDependant_YesOption.Click();
-            yourHouseholdPage.Continue_Button.Click();
-            addressHistoryPage.Continue_Button.Click();
-            dependantsDontLiveWithMePage.Continue_Button.Click();
-            personalDetailsSummaryPage.Continue_Button.Click();
-        }
-
-        #endregion
-
-        #endregion
-
-        #region Section 1.3 Personal details Including Dependants Who dont live with you
-        #region Quick route
-
-        [When(@"I confirm my personal details including dependants who dont live with you")]
-        public void WhenIConfirmMyPersonalDetailsIncludingDependantsWhoDontLiveWithYou()
-        {
-            applicationOverviewPage.PersonalDetails_StartButton.Click();
-            personalDetailsPage.Title_MrOption.Click();
-            personalDetailsPage.Continue.Click();
-            personalDetails2Page.Gender_ManOption.Click();
-            personalDetails2Page.NINumber_InputField.SendKeys("AA123456A");
-            personalDetails2Page.RelationShipStatus_SingleOption.Click();
-            personalDetails2Page.ContinueButton.Click();
-            otherNameOrAliasPage.Continue_NoOtherNames.Click();
-            contactDetailsPage.TelephoneField.SendKeys("01213337777");
-            contactDetailsPage.BuildingAndStreet_LineOneField.SendKeys("1 Test Street");
-            contactDetailsPage.TownOrCityField.SendKeys("Test Town");
-            contactDetailsPage.PostcodeField.SendKeys("T35 7ER");
-            contactDetailsPage.CountryField.SendKeys("United Kingdom");
-            contactDetailsPage.Continue.Click();
-            residencyDetailsPage.March.Click();
-            residencyDetailsPage.Year.SendKeys("2000");
-            residencyDetailsPage.OwntheProperty_YesOption.Click();
-            residencyDetailsPage.ContinueButton.Click();
-            yourHouseholdPage.Continue_Button.Click();
-            addressHistoryPage.Continue_Button.Click();
-            dependantsDontLiveWithMePage.FirstName_InputField.SendKeys("Dependant");
-            dependantsDontLiveWithMePage.LastName_InputField.SendKeys("One");
-            dependantsDontLiveWithMePage.AddPersonButton.Click();
-            dependantDetailsPage.AgeInputField.SendKeys("15");
-            dependantDetailsPage.BuildingAndStreet_LineOneField.SendKeys("2 Test Street");
-            dependantDetailsPage.TownOrCityField.SendKeys("Test Town");
-            dependantDetailsPage.PostcodeField.SendKeys("T35 7ER");
-            dependantDetailsPage.CountryField.SendKeys("United Kingdom");
-            dependantDetailsPage.Relationship_ChildOption.Click();
-            dependantDetailsPage.ContinueButton.Click();
-            personalDetailsSummaryPage.Continue_Button.Click();
-        }
-
-        #endregion
-        #endregion
-
-        #region Section 1.4 Personal Details with AliasName Including anyone who lives with you
-        #region Quick route
-
-        [When(@"I confirm my personal details with AliasName Including anyone who lives with you")]
-        public void WhenIConfirmMyPersonalDetailsWithAliasNameIncludingAnyoneWhoLivesWithYou()
-        {
-            applicationOverviewPage.PersonalDetails_StartButton.Click();
-            personalDetailsPage.Title_MrOption.Click();
-            personalDetailsPage.Continue.Click();
-            personalDetails2Page.Gender_ManOption.Click();
-            personalDetails2Page.NINumber_InputField.SendKeys("AA123456A");
-            personalDetails2Page.RelationShipStatus_SingleOption.Click();
-            personalDetails2Page.ContinueButton.Click();
-            otherNameOrAliasPage.FirstName_InputField.SendKeys("Previous");
-            otherNameOrAliasPage.LastName_InputField.SendKeys("Name");
-            otherNameOrAliasPage.AddNameButton.Click();
-            otherNameOrAliasPage.Continue_AllNamesAdded.Click();
-            contactDetailsPage.TelephoneField.SendKeys("01213337777");
-            contactDetailsPage.BuildingAndStreet_LineOneField.SendKeys("1 Test Street");
-            contactDetailsPage.TownOrCityField.SendKeys("Test Town");
-            contactDetailsPage.PostcodeField.SendKeys("T35 7ER");
-            contactDetailsPage.CountryField.SendKeys("United Kingdom");
-            contactDetailsPage.Continue.Click();
-            residencyDetailsPage.March.Click();
-            residencyDetailsPage.Year.SendKeys("2000");
-            residencyDetailsPage.OwntheProperty_YesOption.Click();
-            residencyDetailsPage.ContinueButton.Click();
-            yourHouseholdPage.FirstName_InputField.SendKeys("First");
-            yourHouseholdPage.LastName_InputField.SendKeys("Name");
-            yourHouseholdPage.AddPersonButton.Click();
-            addPersonPage.AgeGroup_24_30.Click();
-            addPersonPage.Relationship_HusbandWifePartnerOption.Click();
-            addPersonPage.FinanciallyDependant_YesOption.Click();
-            yourHouseholdPage.Continue_Button.Click();
-            addressHistoryPage.Continue_Button.Click();
-            dependantDetailsPage.ContinueButton.Click();
-            personalDetailsSummaryPage.Continue_Button.Click();
-        }
-
-        #endregion
-        #endregion
-
-        #region Section 1.5 Personal details with With AliasName, Anyone Who Lives With You, Dependants Who Dont Live With you
-
-        #region Quick route
-        [When(@"I confirm my personal details with AliasName, Anyone Who Lives With You, Dependants Who Dont Live With you")]
-        public void WhenIConfirmMyPersonalDetailsWithAliasNameAnyoneWhoLivesWithYouDependantsWhoDontLiveWithYou()
-        {
-            applicationOverviewPage.PersonalDetails_StartButton.Click();
-            personalDetailsPage.Title_MrOption.Click();
-            personalDetailsPage.Continue.Click();
-            personalDetails2Page.Gender_ManOption.Click();
-            personalDetails2Page.NINumber_InputField.SendKeys("AA123456A");
-            personalDetails2Page.RelationShipStatus_SingleOption.Click();
-            personalDetails2Page.ContinueButton.Click();
-            otherNameOrAliasPage.FirstName_InputField.SendKeys("Previous");
-            otherNameOrAliasPage.LastName_InputField.SendKeys("Name");
-            otherNameOrAliasPage.AddNameButton.Click();
-            otherNameOrAliasPage.Continue_AllNamesAdded.Click();
-            contactDetailsPage.TelephoneField.SendKeys("01213337777");
-            contactDetailsPage.BuildingAndStreet_LineOneField.SendKeys("1 Test Street");
-            contactDetailsPage.TownOrCityField.SendKeys("Test Town");
-            contactDetailsPage.PostcodeField.SendKeys("T35 7ER");
-            contactDetailsPage.CountryField.SendKeys("United Kingdom");
-            contactDetailsPage.Continue.Click();
-            residencyDetailsPage.March.Click();
-            residencyDetailsPage.Year.SendKeys("2000");
-            residencyDetailsPage.OwntheProperty_YesOption.Click();
-            residencyDetailsPage.ContinueButton.Click();
-            yourHouseholdPage.FirstName_InputField.SendKeys("First");
-            yourHouseholdPage.LastName_InputField.SendKeys("Name");
-            yourHouseholdPage.AddPersonButton.Click();
-            addPersonPage.AgeGroup_24_30.Click();
-            addPersonPage.Relationship_HusbandWifePartnerOption.Click();
-            addPersonPage.FinanciallyDependant_YesOption.Click();
-            yourHouseholdPage.Continue_Button.Click();
-            addressHistoryPage.Continue_Button.Click();
-            dependantsDontLiveWithMePage.FirstName_InputField.SendKeys("Dependant");
-            dependantsDontLiveWithMePage.LastName_InputField.SendKeys("One");
-            dependantsDontLiveWithMePage.AddPersonButton.Click();
-            dependantDetailsPage.AgeInputField.SendKeys("15");
-            dependantDetailsPage.BuildingAndStreet_LineOneField.SendKeys("2 Test Street");
-            dependantDetailsPage.TownOrCityField.SendKeys("Test Town");
-            dependantDetailsPage.PostcodeField.SendKeys("T35 7ER");
-            dependantDetailsPage.CountryField.SendKeys("United Kingdom");
-            dependantDetailsPage.Relationship_ChildOption.Click();
-            dependantDetailsPage.ContinueButton.Click();
-            personalDetailsSummaryPage.Continue_Button.Click();
-        }
-
-
-
-        #endregion
-        #endregion
-
-        #region Section 2 Employment
-
-        #region Quick Route
-
-        [When(@"I confirm my employment details")]
-        public void WhenIConfirmMyEmploymentDetails()
-        {
-            applicationOverviewPage.Employment_StartButton.Click();
-            employmentSummaryPage.HasBeenDirector_NoButton.Click();
-            employmentSummaryPage.HasBeenSelfEmployed_NoButton.Click();
-            employmentSummaryPage.HasBeenPartner_NoButton.Click();
-            employmentSummaryPage.HasBeenEmployed_No.Click();
-            employmentSummaryPage.Continue.Click();
-            yourStatusPage.CurrentlyNotWorking.Click();
-            yourStatusPage.Continue.Click();
-        }
-
-
-        #endregion
-
-        #endregion
-
-        #region Section 3 Bank Accounts And Savings
-
-        #region Quick Route
-
-        [When(@"I confirm I had no bank accounts and savings")]
-        public void WhenIConfirmIHadNoBankAccountsAndSavings()
-        {
-            applicationOverviewPage.BankAccountsAndSavings_StartButton.Click();
-            bankAccountsAndSavingsPage.ContinueNoBankAccounts.Click();
-        }
-
-
-        #endregion
-
-        #endregion
-
-        #region Section 4 Assets
-
-        #region Quick Route
-
-        [When(@"I confirm I have no assets")]
-        public void WhenIConfirmIHaveNoAssets()
-        {
-            applicationOverviewPage.Assets_StartButton.Click();
-            assetsPage.Properties_No.Click();
-            assetsPage.Vehicles_No.Click();
-            assetsPage.PensionInsurance_No.Click();
-            assetsPage.OtherItems_Start.Click();
-            otherItemsPage.Cash_No.Click();
-            otherItemsPage.ItemsPossessions_None.Click();
-            otherItemsPage.CompensationsLegal_None.Click();
-            otherItemsPage.WillsTrust_None.Click();
-            otherItemsPage.StocksShares_None.Click();
-            otherItemsPage.SelfEmployedBusinessAssets_None.Click();
-            otherItemsPage.MoneyOwed_None.Click();
-            otherItemsPage.Other_None.Click();
-            otherItemsPage.Continue.Click();
-            assetsPage.Continue.Click();
-            soldTransferredGiftedAssetsPage.SoldProperties_No.Click();
-            soldTransferredGiftedAssetsPage.SoldPensionInsurance_No.Click();
-            soldTransferredGiftedAssetsPage.SoldAssets_No.Click();
-            soldTransferredGiftedAssetsPage.Continue.Click();
-        }
-
-
-        #endregion
-
-        #endregion
-
-        #region Section 5 Money You Owe
-
-        #region Quick Route
-
-        [When(@"I confirm the money I owe")]
-        public void WhenIConfirmTheMoneyIOwe()
-        {
-            applicationOverviewPage.MoneyYouOwe_StartButton.Click();
-            moneyYouOwePage.CreditorName.SendKeys("Smoke Test");
-            moneyYouOwePage.AddCreditor.Click();
-            creditorsAddressPage.AddressLine1.SendKeys("107 Test Avenue");
-            creditorsAddressPage.TownCity.SendKeys("Test Town");
-            creditorsAddressPage.PostalCode.SendKeys("T37 5ER");
-            creditorsAddressPage.Country.SendKeys("United Kingdom");
-            creditorsAddressPage.PageHeading.Click();
-            creditorsAddressPage.Continue.Click();
-            amountYouOwePage.Amount.SendKeys("10000");
-            amountYouOwePage.Utilities.Click();
-            amountYouOwePage.DebtStarted_1_2Years.Click();
-            amountYouOwePage.Continue.Click();
-            moneyYouOwePage.ContinueAddedAllCreditors.Click();
-            actionsTakenPage.Continue.Click();
-            moneyYouOweSummaryPage.Continue.Click();
-        }
-
-
-        #endregion
-        #endregion
-
-        #region Section 6 Income and Expenses
-
-        #region Quick Route
-        [When(@"I confirm I have no income and expenses")]
-        public void WhenIConfirmIHaveNoIncomeAndExpenses()
-        {
-            applicationOverviewPage.IncomeAndExpenses_StartButton.Click();
-            incomeAndExpensesPage.Continue.Click();
-        }
-        #endregion
-
-        #endregion
-
-        #region Section 7 Legal Proceedings
-
-        #region Quick Route
-        [When(@"I confirm I have no legal proceedings")]
-        public void WhenIConfirmIHaveNoLegalProceedings()
-        {
-            applicationOverviewPage.LegalProceedings_StartButton.Click();
-            legalProceedingsPage.SeparatedNo.Click();
-            legalProceedingsPage.OngoingLegalNo.Click();
-            legalProceedingsPage.Continue.Click();
-        }
-        #endregion
-
-        #endregion
-
-        #region Section 8 Debt History
-
-        #region Quick Route
-
-        [When(@"I confirm my debt history")]
-        public void WhenIConfirmMyDebtHistory()
-        {
-            applicationOverviewPage.DebtHistory_StartButton.Click();
-            debtHistoryOverviewPage.StartDebtHistory.Click();
-            debtHistoryPage.RealisedJanuary.Click();
-            debtHistoryPage.RealisedYear.SendKeys(DateTime.Now.Year.ToString());
-            debtHistoryPage.RelationshipBreakdown.Click();
-            debtHistoryPage.Continue.Click();
-            debtHistoryOverviewPage.DebtReliefNo.Click();
-            debtHistoryOverviewPage.PreferentialPaymentsNo.Click();
-            debtHistoryOverviewPage.Continue.Click();
-        }
-
-
-        #endregion
-
-        #endregion
-
-        #region Payment
-
-        #region Quick Route
-
-        [When(@"I pay my fee")]
-        public void WhenIPayMyFee()
-        {
-            applicationOverviewPage.MakeAPayment.Click();
-            makeFeePaymentPage.Amount.SendKeys("680");
-            makeFeePaymentPage.MakeACardPayment.Click();
-            worldPayPage.CardNumber.SendKeys(ConfigUtil.PaymentCardNumber);
-            worldPayPage.ExpiryMonth.SendKeys("07");
-            worldPayPage.ExpiryYear.SendKeys("28");
-            worldPayPage.SecurityCode.SendKeys(ConfigUtil.PaymentSecurityNumber);
-            worldPayPage.MakePayment.Click();
-            Thread.Sleep(2000);
-            paymentAcknowledgementPage.ReturnToApplication.Click();
-        }
-
-        #endregion
-        #endregion
-
-        #region Submit Application
-
-        #region Quick Route
-
-        [When(@"I submit my application")]
-        public void WhenISubmitMyApplication()
-        {
-            applicationOverviewPage.SumbitApplication.Click();
-            continueToSubmitPage.IncludedDebtsInOtherApplicationNo.Click();
-            continueToSubmitPage.SpokenWithDebtAdvisorYes.Click();
-            continueToSubmitPage.PARVNo.Click();
-            continueToSubmitPage.Continue.Click();
-            submitApplicationPage.SubmitMyApplication.Click();
-        }
-
-        [Then(@"the application is submitted")]
-        public void ThenTheApplicationIsSubmitted()
-        {
-            applicationSubmittedPage.ApplicationSubmitted.Text.Should().Be("Your application has been submitted");
-        }
-
-
-        #endregion
-
-        #endregion
-
-        #region ODS Adjudicator
-
-        [When(@"I log into ODS Adjudicator")]
-        public void WhenILogIntoODSAdjudicator()
-        {
-            driver.Navigate().GoToUrl(ConfigUtil.ODSAdjudicatorUrl);
-            adjudicatorLoginPage.Username.SendKeys(ConfigUtil.ODSAdjudicatorUsername);
-            adjudicatorLoginPage.Password.SendKeys(ConfigUtil.ODSAdjudicatorPassword);
-            adjudicatorLoginPage.Login.Click();
-        }
-
-        #endregion
-
-        #region ODS Admin
-
-        [When(@"I log into ODS Admin")]
-        public void WhenILogIntoODSAdmin()
-        {
-            driver.Navigate().GoToUrl(ConfigUtil.ODSAdminUrl);
-            adminLoginPage.Username.SendKeys(ConfigUtil.ODSAdminUsername);
-            adminLoginPage.Password.SendKeys(ConfigUtil.ODSAdminPassword);
-            adminLoginPage.Login.Click();
-        }
-
-
-        #endregion
-
-    }
-}
+
+
+
+
+
+
+
+////using BSSTestAutomation.Pages; // Import the correct namespaces
+////using BSS_Automation_Framework.Utilities;
+////using OpenQA.Selenium;
+////using System;
+////using TechTalk.SpecFlow;
+
+////namespace BSS_Automation_Framework.StepDefinitions
+////{
+////    [Binding]
+////    public class EndToEndJourneyStepDefinitions
+////    {
+////        private readonly IWebDriver _driver;
+////        private readonly BSSLoginPage _bssLoginPage;
+////        private readonly BSSSelectOrganisation _bSSSelectOrganisation; // Initialize this object
+
+////        // Constructor to initialize WebDriver and Page Objects
+////        public EndToEndJourneyStepDefinitions(IWebDriver driver)
+////        {
+////            _driver = driver ?? throw new ArgumentNullException(nameof(driver));
+////            _bssLoginPage = new BSSLoginPage(_driver); // Instantiate the login page object
+////            _bSSSelectOrganisation = new BSSSelectOrganisation(_driver); // Instantiate the organisation selection page object
+////        }
+
+////        // Step definition for navigating to the homepage and logging in
+////        [Given(@"I log into the Breathing Space Application")]
+////        public void GivenILogIntoTheBreathingSpaceApplication()
+////        {
+
+////                // Navigate to the portal URL
+////                _driver.Navigate().GoToUrl("https://webapp-uksouth-sit-portal001.azurewebsites.net/");
+
+////                // Login with credentials
+////                _bssLoginPage.BSSLogin("28 09 73 31 15 10", "Test@123456");
+////                _bssLoginPage.EnterOnetimePassword("123456");
+
+////                // Select an organisation from the dropdown by visible text
+////                string textToSelect = "Manzoor Money Advisor";
+////                _bSSSelectOrganisation.SelectByVisibleText(textToSelect);
+
+////                // Validate that the correct option is selected
+////                bool isCorrect = _bSSSelectOrganisation.IsSelectedOption(textToSelect);
+////                Console.WriteLine(isCorrect ? "Option selected correctly." : "Option selection failed.");
+////            }
+
+////        [When(@"I navigate to the Breathing Space Homepage as '([^']*)'")]
+////        public void WhenINavigateToTheBreathingSpaceHomepageAs(string p0)
+////        {
+////            try
+////            {
+
+////                // Select an organisation from the dropdown by visible text
+////                string textToSelect = "Manzoor Money Advisor";
+////                _bSSSelectOrganisation.SelectByVisibleText(textToSelect);
+
+////                // Validate that the correct option is selected
+////                bool isCorrect = _bSSSelectOrganisation.IsSelectedOption(textToSelect);
+////                Console.WriteLine(isCorrect ? "Option selected correctly." : "Option selection failed.");
+////            }
+////            catch (Exception ex)
+////            {
+////                // Log error if anything goes wrong
+////                Console.WriteLine("Error: " + ex.Message);
+////            }
+////        }
+////    }
+////}
+
+
+//using BSSTestAutomation.Pages; // Import the correct namespaces
+//using BSS_Automation_Framework.Utilities;
+//using OpenQA.Selenium;
+//using System;
+//using TechTalk.SpecFlow;
+//using Bankruptcy_Automation_Framework.Pages;
+//using NUnit.Framework;
+//using OpenQA.Selenium.Support.UI;
+//using SeleniumExtras.WaitHelpers;
+
+//namespace BSS_Automation_Framework.StepDefinitions
+//{
+//    [Binding]
+//    public class EndToEndJourneyStepDefinitions
+//    {
+//        private readonly IWebDriver _driver;
+//        private readonly BSSLoginPage _bssLoginPage;
+//        private readonly BSSSelectOrganisation _bSSSelectOrganisation;
+//        private readonly BSSHomePage _homePage;
+//        private readonly BSSClientDetailsPage _clientDetailsPage;
+
+
+
+//        // Constructor to initialize WebDriver and Page Objects
+//        public EndToEndJourneyStepDefinitions(IWebDriver driver)
+//        {
+//            _driver = driver ?? throw new ArgumentNullException(nameof(driver));
+//            _bssLoginPage = new BSSLoginPage(_driver);
+//            _bSSSelectOrganisation = new BSSSelectOrganisation(_driver);
+//            _homePage = new BSSHomePage(_driver);
+//            _clientDetailsPage = new BSSClientDetailsPage(driver);
+
+//        }
+
+//        // Step definition for navigating to the homepage and logging in
+//        [Given(@"I log into the Breathing Space Application")]
+//        public void GivenILogIntoTheBreathingSpaceApplication()
+//        {
+//            // Navigate to the portal URL
+//            _driver.Navigate().GoToUrl("https://webapp-uksouth-sit-portal001.azurewebsites.net/");
+
+//            // Login with credentials
+//            _bssLoginPage.BSSLogin("28 09 73 31 15 10", "Test@123456");
+//            _bssLoginPage.EnterOnetimePassword("123456");
+//        }
+
+//        // Step definition for navigating to the Breathing Space homepage as a user
+//        [When(@"I navigate to the Breathing Space Homepage as '(.*)'")]
+//        public void WhenINavigateToTheBreathingSpaceHomepageAs(string user)
+//        {
+//            // The 'user' variable will contain the username or role from the Feature file
+//            Console.WriteLine($"Navigating to the Breathing Space homepage as {user}...");
+
+//            // Optionally, you could use this user parameter to perform user-specific actions (like logging in as a different user).
+//            // But for now, we assume login steps are handled in the Given step.
+//        }
+
+//        // Step definition for selecting an organisation dynamically from the data table
+//        [When(@"I select organisation '(.*)'")]
+//        public void WhenISelectOrganisation(string organisation)
+//        {
+//            try
+//            {
+//                // Use the passed organisation name to select it from the dropdown
+//                Console.WriteLine($"Selecting organisation: {organisation}");
+//                _bSSSelectOrganisation.SelectByVisibleText(organisation);
+
+//                // Validate that the correct option is selected
+//                bool isCorrect = _bSSSelectOrganisation.IsSelectedOption(organisation);
+//                Console.WriteLine(isCorrect ? "Option selected correctly." : "Option selection failed.");
+//            }
+//            catch (Exception ex)
+//            {
+//                // Log error if anything goes wrong
+//                Console.WriteLine("Error: " + ex.Message);
+//            }
+//        }
+
+//        // Step definition to check if the correct organisation is selected (optional)
+//        //[Then(@"the organisation should be selected successfully")]
+//        //public void ThenTheOrganisationShouldBeSelectedSuccessfully()
+//        //{
+//        //    // Get the text of the selected option
+//        //  //  string selectedText = _bSSSelectOrganisation.BSSOrganisation.Text;
+//        //    Console.WriteLine($"Selected Organisation: {selectedText}");
+
+//        //    // Assert that the expected organisation was selected
+//        //    if (string.IsNullOrEmpty(selectedText))
+//        //    {
+//        //        throw new Exception("Organisation selection failed!");
+//        //    }
+//        [When(@"I choose to create a Breathing Space")]
+//        public void WnIChooseToCreateABreathingSpace(Table table)
+//        {
+//            foreach (var row in table.Rows)
+//            {
+//                // In this case, no headers, so we get the columns by index.
+//                string linkName = row[0];  // Link Name is in the first column
+//                string action = row[1];    // Action (yes/no) is in the second column
+
+//                switch (linkName)
+//                {
+//                    case "HomePageActiveBSLink":
+//                        if (action.Equals("yes", StringComparison.InvariantCultureIgnoreCase))
+//                        {
+//                            _homePage.ClickActiveBreathingSpacesLink();
+//                        }
+//                        break;
+
+//                    case "HomePageReviewDebtLink":
+//                        if (action.Equals("yes", StringComparison.InvariantCultureIgnoreCase))
+//                        {
+//                            _homePage.ClickReviewDebtLink();
+//                        }
+//                        break;
+
+//                    case "HomePageProposedDebtLink":
+//                        if (action.Equals("yes", StringComparison.InvariantCultureIgnoreCase))
+//                        {
+//                            _homePage.ClickProposedDebtLink();
+//                        }
+//                        break;
+
+//                    case "HomePageSoldDebtLink":
+//                        if (action.Equals("yes", StringComparison.InvariantCultureIgnoreCase))
+//                        {
+//                            _homePage.ClickSoldDebtLink();
+//                        }
+//                        break;
+
+//                    case "HomePageTransferClientLink":
+//                        if (action.Equals("yes", StringComparison.InvariantCultureIgnoreCase))
+//                        {
+//                            _homePage.ClickTransferClientLink();
+//                        }
+//                        break;
+
+//                    case "HomePageTransferredClientsLink":
+//                        if (action.Equals("yes", StringComparison.InvariantCultureIgnoreCase))
+//                        {
+//                            _homePage.ClickTransferredClientsLink();
+//                        }
+//                        break;
+
+//                    default:
+//                        // If no action is defined for the link or the action is 'no', click the "Create new breathing space" link by default
+//                        _homePage.ClickCreateBSButton();
+//                        break;
+//                }
+//            }
+//        }
+
+
+//        [When(@"I enter the client details")]
+//        public void WhenIEnterTheClientDetails(Table table)
+//        {
+//            Assert.That(_clientDetailsPage.ClientDetailsPageTitle.Displayed, Is.True, "Client Details Page is not displayed.");
+
+//            var row = table.Rows[0];
+//            string clientDetailsFieldValue = row["ClientDetailsFields"]; // "Fill" or "empty"
+//            string firstName = row["FirstName"];
+//            string middleName = row["MiddleName"];
+//            string lastName = row["LastName"];
+//            string birthDay = row["BirthDay"];
+//            string birthMonth = row["BirthMonth"];
+//            string birthYear = row["BirthYear"];
+
+//            if (clientDetailsFieldValue.Equals("Fill", StringComparison.OrdinalIgnoreCase))
+//            {
+//                // Normal scenario: Just fill and submit
+//                _clientDetailsPage.FillAllFields(firstName, middleName, lastName, birthDay, birthMonth, birthYear);
+//                _clientDetailsPage.SubmitForm();
+
+//                if (_clientDetailsPage.HasErrors())
+//                {
+//                    throw new Exception("Form submission failed. Errors are present on the page even though fields were filled.");
+//                }
+//                Console.WriteLine("Form submitted successfully with filled details.");
+//            }
+//            else if (clientDetailsFieldValue.Equals("empty", StringComparison.OrdinalIgnoreCase))
+//            {
+//                // Empty scenario:
+//                // 1. Submit the form empty first to trigger validation errors.
+//                _clientDetailsPage.SubmitForm();
+
+//                // Now there should be errors since fields are empty
+//                if (!_clientDetailsPage.HasErrors())
+//                {
+//                    throw new Exception("Expected validation errors, but none were displayed after submitting empty form.");
+//                }
+
+//                // 2. Validate that the expected validation errors are displayed
+//                _clientDetailsPage.ValidateEmptyFields();
+//                Console.WriteLine("Validation errors confirmed for empty fields.");
+
+//                // 3. After confirming errors, fill in the correct fields now.
+//                _clientDetailsPage.FillAllFields(firstName, middleName, lastName, birthDay, birthMonth, birthYear);
+
+//                // 4. Submit the form again after correcting fields
+//                _clientDetailsPage.SubmitForm();
+
+//                if (_clientDetailsPage.HasErrors())
+//                {
+//                    throw new Exception("Form submission failed again. Expected no errors after filling the fields.");
+//                }
+
+//                Console.WriteLine("Form submitted successfully after correcting empty fields.");
+//            }
+//            else
+//            {
+//                throw new ArgumentException($"Unknown ClientDetailsFieldValue: {clientDetailsFieldValue}");
+//            }
+//        }
+//    }
+
+//}
+    
+
+
+
+
+
+
+
+
+
+
+
+

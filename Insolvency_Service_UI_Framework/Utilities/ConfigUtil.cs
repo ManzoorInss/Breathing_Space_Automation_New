@@ -1,59 +1,79 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
-namespace Bankruptcy_Automation_Framework.Utilities
+namespace BSS_Automation_Framework.Utilities
 {
-    public class ConfigUtil
+    public static class ConfigUtil
     {
-        public static string RunningConfig { get; set; }
         public static IConfiguration GetConfigKey { get; set; }
         public static IConfiguration GetTestDataKey { get; set; }
-        public static string PortalBaseUrl { get; set; }
-        public static string ODSAdminUrl { get; set; }
-        public static string ODSAdminUsername { get; set; }
-        public static string ODSAdminPassword { get; set; }
-        public static string ODSAdjudicatorUrl { get; set; }
-        public static string ODSAdjudicatorUsername { get; set; }
-        public static string ODSAdjudicatorPassword { get; set; }
-        public static string MailTrapUrl { get; set; }
-        public static string MailTrapUsername { get; set; }
-        public static string MailTrapPassword { get; set; }
-        public static string PaymentCardNumber { get; set; }
-        public static string PaymentSecurityNumber { get; set; }
-        public static string LoremIpsum { get; set; }
-        public static string SpecialCharacters { get; set; }
+        public static string PortalBaseUrl { get; private set; }
 
-        private static IConfiguration InitAppConfiguration =>
-            new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{RunningConfig}.json")
-                .Build();
-
-        private static IConfiguration InitTestDataConfiguration =>
-            new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile(@"Data\TestData.json", optional: true, reloadOnChange: true)
-                .Build();
         public static void InitAppConfig()
         {
-            // TODO: find a proper way to get the running configuration
-            var assemblyPath = Assembly.GetExecutingAssembly().Location;
-            var folders = assemblyPath.Split('\\').ToList();
-            // get the folder after bin
-            var binPosition = folders.IndexOf("bin");
-            RunningConfig = folders[binPosition + 1];
-            GetConfigKey = InitAppConfiguration;
+            var basePath = AppDomain.CurrentDomain.BaseDirectory; // Gets bin/Debug path
+            var configPath = Path.Combine(basePath, "..", "..", "..", "appSettings.json");
+
+            if (!File.Exists(configPath))
+            {
+                throw new FileNotFoundException($"Configuration file not found at {configPath}");
+            }
+
+            GetConfigKey = new ConfigurationBuilder()
+                .SetBasePath(Path.GetDirectoryName(configPath))
+                .AddJsonFile("appSettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+            PortalBaseUrl = GetConfigKey["PortalBaseUrl"];
         }
 
         public static void InitTestData()
         {
-            GetTestDataKey = InitTestDataConfiguration;
+            var basePath = AppDomain.CurrentDomain.BaseDirectory; // Gets bin/Debug path
+            var testDataPath = Path.Combine(basePath, "..", "..", "..", "TestData", "TestData.json");
+
+            if (!File.Exists(testDataPath))
+            {
+                throw new FileNotFoundException($"Test data file not found at {testDataPath}");
+            }
+
+            GetTestDataKey = new ConfigurationBuilder()
+                .SetBasePath(Path.GetDirectoryName(testDataPath))
+                .AddJsonFile("TestData.json", optional: false, reloadOnChange: true)
+                .Build();
         }
     }
 }
+
+public class GlobalWait
+    {
+        private WebDriverWait _wait;
+
+        public GlobalWait(IWebDriver driver, TimeSpan timeout)
+        {
+            _wait = new WebDriverWait(driver, timeout);
+        }
+
+        public void WaitForElementToBeClickable(By locator)
+        {
+            _wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator));
+        }
+
+        public void WaitForElementToBeClickable(IWebElement element)
+        {
+            _wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(element));
+        }
+
+        public void WaitForElementToBeVisible(By locator)
+        {
+            _wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator));
+        }
+
+        public void WaitForElementToExist(By locator)
+        {
+            _wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(locator));
+        }
+    }
